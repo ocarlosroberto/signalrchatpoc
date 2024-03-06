@@ -1,0 +1,12 @@
+<h1>Hostname: {{ hostname }}</h1>
+<hr/>
+<form (ngSubmit)="sendMessage()">
+  <input type="text" [(ngModel)]="user" name="user" placeholder="User" value="{{hostname}}">
+  <input type="text" [(ngModel)]="message" name="message" placeholder="Message">
+  <button type="submit">Send</button>
+</form>
+<hr/>
+<h3>Messages List</h3>
+<div *ngFor="let message of messages">
+  {{message}}
+</div>
