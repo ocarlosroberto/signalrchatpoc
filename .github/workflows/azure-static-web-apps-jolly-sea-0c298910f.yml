@@ -14,19 +14,6 @@ jobs:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
-    steps:
-      - task: NodeTool@0
-        inputs:
-        versionSpec: '16.x'
-        displayName: 'Install Node.js'
-
-      - script: |
-          npm install -g @angular/cli@18.13
-          npm install
-          ng build --prod
-        displayName: 'npm install and build'
-
-
       - uses: actions/checkout@v3
         with:
           submodules: true
@@ -50,6 +37,17 @@ jobs:
     runs-on: ubuntu-latest
     name: Close Pull Request Job
     steps:
+      - task: NodeTool@0
+        inputs:
+        versionSpec: '16.x'
+        displayName: 'Install Node.js'
+
+      - script: |
+          npm install -g @angular/cli@18.13
+          npm install
+          ng build --prod
+        displayName: 'npm install and build'
+
       - name: Close Pull Request
         id: closepullrequest
         uses: Azure/static-web-apps-deploy@v1
