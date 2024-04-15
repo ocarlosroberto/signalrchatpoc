@@ -14,7 +14,7 @@ import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 export class HomeComponent {
   title = 'ChatAppClient';
   private connection: HubConnection;
-  private hubUrl: string = "http://localhost:5000";
+  private hubUrl: string = "https://localhost:5001";
   public messages: string[] = [];
   public user: string = "";
   public message: string = "";
