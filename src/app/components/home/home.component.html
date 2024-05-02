@@ -1,12 +1,33 @@
-<h1>Hostname: {{ hostname }}</h1>
-<hr/>
 <form (ngSubmit)="sendMessage()">
-  <input type="text" [(ngModel)]="user" name="user" placeholder="User" value="{{hostname}}">
-  <input type="text" [(ngModel)]="message" name="message" placeholder="Message">
-  <button type="submit">Send</button>
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-subtitle>POC Periféricos</mat-card-subtitle>
+      <mat-card-title>Tela de Ação com os Periféricos</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field [style.width.px]="250">
+        <mat-label>Digite o Periférico</mat-label>
+        <input matInput #input [(ngModel)]="user" placeholder="Ex. PinPad">
+      </mat-form-field>
+      <mat-divider></mat-divider>
+      <mat-form-field [style.width.px]="350">
+        <mat-label>Digite o Comando</mat-label>
+        <input matInput #input [(ngModel)]="message" placeholder="Ex. InserirSenha">
+      </mat-form-field>
+      <mat-divider></mat-divider>
+      <mat-form-field [style.width.px]="600">
+        <mat-label>Digite os Parâmetros</mat-label>
+        <input matInput #input placeholder="Ex. JSON">
+      </mat-form-field>
+      <mat-divider></mat-divider>
+    </mat-card-content>
+    <mat-card-actions [style]="">
+      <button mat-flat-button color="primary">Enviar</button>
+    </mat-card-actions>
+    <mat-card-footer>
+      <div *ngFor="let message of messages">
+        {{ message }}
+      </div>
+    </mat-card-footer>
+  </mat-card>
 </form>
-<hr/>
-<h3>Messages List</h3>
-<div *ngFor="let message of messages">
-  {{message}}
-</div>

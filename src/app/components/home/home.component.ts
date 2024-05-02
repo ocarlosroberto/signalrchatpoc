@@ -1,12 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatInputModule } from '@angular/material/input';
+
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, MatCardModule, MatProgressBarModule, MatButtonModule, MatDividerModule, MatInputModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -22,18 +28,14 @@ export class HomeComponent {
 
   constructor() {
     this.connection = new HubConnectionBuilder()
-      .withUrl(this.hubUrl + '/pochub?username=Tela' + Math.floor(Math.random() * 100))
+      .withUrl(this.hubUrl + '/hub?username=Tela' + Math.floor(Math.random() * 100))
       .build();
   }
 
   async ngOnInit() {
-    this.connection.on('ReceiveBroadcastMessage', (hostName, userId, message) => {
-      this.messages.push(`${hostName} - ${userId}: ${message}`);
+    this.connection.on('ReceberRetorno', (message) => {
+      this.messages.push(`${message}`);
     });
-
-    this.connection.on('ReturnHostName', (hostname) => {
-      this.hostname = hostname;
-    })
 
     try {
       await this.connection.start();
@@ -47,13 +49,13 @@ export class HomeComponent {
     this.hostname = location.hostname;
   }
 
-  async onLoad(){
+  async onLoad() {
     await this.connection.invoke('GetHostName');
   }
 
   async sendMessage() {
     if (!this.message) return;
-    await this.connection.invoke('BroadcastMessage', this.message);
+    await this.connection.invoke('EnviarComandoParaPeriferico', this.message, this.user,"");
     this.message = '';
   }
 }
