@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,7 +14,7 @@ import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FormsModule, CommonModule, MatCardModule, MatProgressBarModule, MatButtonModule, MatDividerModule, MatInputModule],
+  imports: [FormsModule, HttpClientModule, CommonModule, MatCardModule, MatProgressBarModule, MatButtonModule, MatDividerModule, MatInputModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -22,11 +24,11 @@ export class HomeComponent {
   private connection: HubConnection;
   private hubUrl: string = "https://localhost:5001";
   public messages: string[] = [];
-  public user: string = "";
-  public message: string = "";
-  public hostname: string = "";
+  public peripheral: string = "";
+  public command: string = "";
+  public jsonInput: string = "";
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.connection = new HubConnectionBuilder()
       .withUrl(this.hubUrl + '/hub?username=Tela' + Math.floor(Math.random() * 100))
       .build();
@@ -45,17 +47,14 @@ export class HomeComponent {
     } catch (error) {
       console.error('Failed to connect to SignalR hub', error);
     }
-
-    this.hostname = location.hostname;
   }
 
   async onLoad() {
-    await this.connection.invoke('GetHostName');
+
   }
 
   async sendMessage() {
-    if (!this.message) return;
-    await this.connection.invoke('EnviarComandoParaPeriferico', this.message, this.user,"");
-    this.message = '';
+    if (!this.command) return;
+    await this.connection.invoke('EnviarComandoParaPeriferico', this.command, this.peripheral, this.jsonInput);
   }
 }
