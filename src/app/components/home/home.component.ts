@@ -8,13 +8,14 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FormsModule, HttpClientModule, CommonModule, MatCardModule, MatProgressBarModule, MatButtonModule, MatDividerModule, MatInputModule],
+  imports: [FormsModule, HttpClientModule, CommonModule, MatCardModule, MatProgressBarModule, MatButtonModule, MatDividerModule, MatInputModule, MatSelectModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -27,6 +28,10 @@ export class HomeComponent {
   public peripheral: string = "";
   public command: string = "";
   public jsonInput: string = "";
+  public returnPeripheral: string = "";
+  public peripherals: any[] = [];
+  public commands: any[] = [];
+
 
   constructor(private http: HttpClient) {
     this.connection = new HubConnectionBuilder()
@@ -37,9 +42,12 @@ export class HomeComponent {
   async ngOnInit() {
     this.connection.on('ReceberRetorno', (message) => {
       this.messages.push(`${message}`);
+      this.returnPeripheral = message;
     });
 
     try {
+      this.getPeripherals();
+
       await this.connection.start();
       console.log('Connected to SignalR hub');
       this.onLoad();
@@ -50,11 +58,34 @@ export class HomeComponent {
   }
 
   async onLoad() {
-
   }
 
   async sendMessage() {
     if (!this.command) return;
     await this.connection.invoke('EnviarComandoParaPeriferico', this.command, this.peripheral, this.jsonInput);
+  }
+
+  getAllItems(): string[] {
+    const keys = Object.keys(localStorage);
+    const items = keys.map(key => key + " - " + localStorage.getItem(key));
+    return items.filter(item => item !== null) as string[];
+  }
+
+  getPeripherals(): void {
+    const value = "perifericos";
+    const storageValue = localStorage.getItem(value);
+    if (storageValue)
+      this.peripherals = JSON.parse(storageValue);
+  }
+
+  getCommands(): void {
+    console.log("Oi!");
+    console.log(this.peripheral);
+
+    const value = this.peripheral.toLowerCase() + "-comandos";
+    const storageValue = localStorage.getItem(value);
+    console.log('Valor encontrado:', value);
+    if (storageValue)
+      this.commands = JSON.parse(storageValue);
   }
 }
