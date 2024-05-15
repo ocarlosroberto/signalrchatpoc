@@ -1,53 +1,12 @@
-<form (ngSubmit)="sendMessage()">
-  <mat-card class="example-card">
-
-    <mat-card-header>
-      <mat-card-subtitle>POC Periféricos</mat-card-subtitle>
-      <mat-card-title>Tela de Ação com os Periféricos</mat-card-title>
-    </mat-card-header>
-
-    <mat-card-content>
-
-      <mat-form-field [style.width.px]="250">
-        <mat-label>Periférico</mat-label>
-        <mat-select [(ngModel)]="peripheral" name="peripheral" (selectionChange)="getCommands()">
-            <mat-option *ngFor="let p of peripherals" [value]="p.name">{{ p.name }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-divider></mat-divider>
-
-      <mat-form-field [style.width.px]="350">
-        <mat-label>Comando</mat-label>
-        <mat-select [(ngModel)]="command" name="command">
-            <mat-option *ngFor="let c of commands" [value]="c.name">{{ c.name }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-divider></mat-divider>
-
-      <mat-form-field [style.width.px]="600">
-        <mat-label>Digite os Parâmetros</mat-label>
-        <input matInput #input [(ngModel)]="jsonInput" placeholder="Ex. JSON">
-      </mat-form-field>
-
-      <mat-divider></mat-divider>
-
-    </mat-card-content>
-
-    <mat-card-actions>
-      <button mat-flat-button color="primary">Enviar</button>
-    </mat-card-actions>
-
-    <mat-card-footer>
-      <mat-form-field  [style.width.px]="625">
-        <mat-label>Retorno do periférico</mat-label>
-        <textarea matInput readonly [(ngModel)]="returnPeripheral"></textarea>
-      </mat-form-field>
-      <div *ngFor="let message of messages">
-        {{ message }}
-      </div>
-    </mat-card-footer>
-
-  </mat-card>
-</form>
+<mat-tab-group dynamicHeight>
+  <mat-tab label="Testar Periférico">
+    <div class="example-small-box mat-elevation-z4">
+      <app-peripheral-test></app-peripheral-test>
+    </div>
+  </mat-tab>
+  <mat-tab label="Gerenciador do Local Storage">
+    <div class="example-large-box mat-elevation-z4">
+      <app-local-storage-manager></app-local-storage-manager>
+    </div>
+  </mat-tab>
+</mat-tab-group>
