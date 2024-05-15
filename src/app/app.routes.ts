@@ -5,5 +5,5 @@ import { LocalStorageManagerComponent } from './components/local-storage-manager
 export const routes: Routes = [
   {path:"",component:HomeComponent},
   {path:"home",component:HomeComponent},
-  {path:"local-storage-manager",component:LocalStorageManagerComponent}
+  {path:"localstoragemanager",component:LocalStorageManagerComponent}
 ];
