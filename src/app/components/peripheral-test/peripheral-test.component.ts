@@ -40,7 +40,7 @@ export class PeripheralTestComponent {
 
   async ngOnInit() {
     this.connection.on('ReceberRetorno', (message) => {
-      this.messages.push(`${message}`);
+      // this.messages.push(`${message}`);
       this.returnPeripheral = message;
     });
 
@@ -64,12 +64,6 @@ export class PeripheralTestComponent {
     await this.connection.invoke('EnviarComandoParaPeriferico', this.command, this.peripheral, this.jsonInput);
   }
 
-  getAllItems(): string[] {
-    const keys = Object.keys(localStorage);
-    const items = keys.map(key => key + " - " + localStorage.getItem(key));
-    return items.filter(item => item !== null) as string[];
-  }
-
   getPeripherals(): void {
     const value = "perifericos";
     const storageValue = localStorage.getItem(value);
@@ -78,12 +72,9 @@ export class PeripheralTestComponent {
   }
 
   getCommands(): void {
-    console.log("Oi!");
-    console.log(this.peripheral);
-
     const value = this.peripheral.toLowerCase() + "-comandos";
     const storageValue = localStorage.getItem(value);
-    console.log('Valor encontrado:', value);
+
     if (storageValue)
       this.commands = JSON.parse(storageValue);
   }
