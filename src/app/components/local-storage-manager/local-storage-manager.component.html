@@ -1,0 +1,36 @@
+Digite a chave a ser armazenado no Local Storage: <input #input [(ngModel)]="key" /><br />
+Digite o valor a ser armazenado no Local Storage: <input #input [(ngModel)]="value" />
+<hr />
+
+<input #input [(ngModel)]="user" readonly /><br />
+
+
+<br />
+<textarea [value]="selectedValue" readonly></textarea><br />
+<hr />
+Digite a chave para buscar o JSON<input type="text" [(ngModel)]="selectedKey" (input)="onSearchKeyChange()"><br />
+<select [(ngModel)]="selectedValue">
+  <option *ngFor="let item of items" [value]="item.name">{{ item.name }}</option>
+</select>
+<hr />
+<div class="container">
+  <div class="card">
+    <div class="title">Gerenciador do LocalStorage</div>
+    <div class="input-field">
+      <input class="input-key" type="text" placeholder="Chave" id="key" [(ngModel)]="key">
+    </div>
+    <div class="input-field">
+      <textarea class="result" placeholder="Valor" id="value" [(ngModel)]="value"></textarea>
+    </div>
+    <button (click)="createItem(key, value)">Criar Item</button>
+    <button (click)="updateItem(key, value)">Atualizar Item</button>
+    <br/>
+    <button (click)="readItem(key)">Ler Item</button>
+    <button (click)="deleteItem(key)">Deletar Item</button>
+    <br/>
+    <br/>
+    <select class="select-all-values" [(ngModel)]="selectedValue">
+      <option *ngFor="let item of getAllItems()" [value]="item">{{ item }}</option>
+    </select>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  text-align: center;
+}
+
+.card {
+  width: 300px;
+  padding: 16px;
+  padding-left: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.input-field {
+  margin-bottom: 16px;
+}
+
+.input-key{
+  width: 95%;
+}
+
+.select-all-values{
+  width: 95%;
+}
+
+.result {
+  width: 95%;
+  height: 80px;
+  resize: none;
+  border: 1px solid #ccc;
+  padding: 8px;
+}
