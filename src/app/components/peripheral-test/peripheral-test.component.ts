@@ -1,8 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,7 +13,7 @@ import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 @Component({
   selector: 'app-peripheral-test',
   standalone: true,
-  imports: [FormsModule, HttpClientModule, CommonModule, MatCardModule, MatProgressBarModule, MatButtonModule, MatDividerModule, MatInputModule, MatSelectModule],
+  imports: [FormsModule, CommonModule, MatCardModule, MatProgressBarModule, MatButtonModule, MatDividerModule, MatInputModule, MatSelectModule],
   templateUrl: './peripheral-test.component.html',
   styleUrl: './peripheral-test.component.scss'
 })
@@ -31,8 +29,7 @@ export class PeripheralTestComponent {
   public peripherals: any[] = [];
   public commands: any[] = [];
 
-
-  constructor(private http: HttpClient) {
+  constructor() {
     this.connection = new HubConnectionBuilder()
       .withUrl(this.hubUrl + '/hub?username=Tela' + Math.floor(Math.random() * 100))
       .build();
@@ -40,7 +37,6 @@ export class PeripheralTestComponent {
 
   async ngOnInit() {
     this.connection.on('ReceberRetorno', (message) => {
-      // this.messages.push(`${message}`);
       this.returnPeripheral = message;
     });
 
@@ -49,14 +45,9 @@ export class PeripheralTestComponent {
 
       await this.connection.start();
       console.log('Connected to SignalR hub');
-      this.onLoad();
-
     } catch (error) {
       console.error('Failed to connect to SignalR hub', error);
     }
-  }
-
-  async onLoad() {
   }
 
   async sendMessage() {
