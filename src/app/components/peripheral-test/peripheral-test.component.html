@@ -28,7 +28,7 @@
 
       <mat-form-field [style.width.px]="600">
         <mat-label>Digite os Parâmetros</mat-label>
-        <input matInput #input [(ngModel)]="jsonInput" placeholder="Ex. JSON">
+        <input matInput #input [(ngModel)]="jsonInput" name="jsonInput" placeholder="Ex. JSON">
       </mat-form-field>
 
       <mat-divider></mat-divider>
@@ -42,7 +42,7 @@
     <mat-card-footer>
       <mat-form-field  [style.width.px]="625">
         <mat-label>Retorno do periférico</mat-label>
-        <textarea matInput readonly [(ngModel)]="returnPeripheral"></textarea>
+        <textarea matInput readonly [(ngModel)]="returnPeripheral" name="returnPeripheral"></textarea>
       </mat-form-field>
       <div *ngFor="let message of messages">
         {{ message }}
