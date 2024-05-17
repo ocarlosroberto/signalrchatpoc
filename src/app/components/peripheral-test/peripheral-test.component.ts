@@ -52,7 +52,7 @@ export class PeripheralTestComponent {
 
   async sendMessage() {
     if (!this.command) return;
-    await this.connection.invoke('EnviarComandoParaPeriferico', this.command, this.peripheral, this.jsonInput);
+    await this.connection.invoke('EnviarComandoParaPeriferico', this.peripheral, this.command, this.jsonInput);
   }
 
   getPeripherals(): void {
