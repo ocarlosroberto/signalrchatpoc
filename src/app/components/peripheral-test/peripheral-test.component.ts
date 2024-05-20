@@ -20,7 +20,7 @@ import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 export class PeripheralTestComponent {
   title = 'Peripheral Test';
   private connection: HubConnection;
-  private hubUrl: string = "https://localhost:5001";
+  private hubUrl: string = "http://localhost:5000";
   public messages: string[] = [];
   public peripheral: string = "";
   public command: string = "";
