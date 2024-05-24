@@ -31,7 +31,7 @@ export class PeripheralTestComponent {
 
   constructor() {
     this.connection = new HubConnectionBuilder()
-      .withUrl(this.hubUrl + '/hub?username=Tela' + Math.floor(Math.random() * 100))
+      .withUrl(this.hubUrl + '/hub?username=Tela' + Math.floor(Math.random() * 100), {withCredentials: false})
       .build();
   }
 
