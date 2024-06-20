@@ -36,8 +36,8 @@ export class PeripheralTestComponent {
   }
 
   async ngOnInit() {
-    this.connection.on('ReceberRetorno', (message) => {
-      this.returnPeripheral = message;
+    this.connection.on('ReceberRetorno', (guid, message) => {
+      this.returnPeripheral = guid + ' ' + message;
     });
 
     try {
@@ -52,7 +52,7 @@ export class PeripheralTestComponent {
 
   async sendMessage() {
     if (!this.command) return;
-    await this.connection.invoke('EnviarComandoParaPeriferico', this.peripheral, this.command, this.jsonInput);
+    await this.connection.invoke('EnviarComandoParaPeriferico', this.generateGuid() ,this.peripheral, this.command, this.jsonInput);
   }
 
   getPeripherals(): void {
@@ -68,5 +68,13 @@ export class PeripheralTestComponent {
 
     if (storageValue)
       this.commands = JSON.parse(storageValue);
+  }
+
+  private generateGuid() : string {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0,
+        v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
   }
 }
