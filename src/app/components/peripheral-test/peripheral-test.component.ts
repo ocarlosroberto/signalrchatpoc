@@ -37,7 +37,7 @@ export class PeripheralTestComponent {
 
   async ngOnInit() {
     this.connection.on('ReceberRetorno', (guid, message) => {
-      this.returnPeripheral = guid + ' ' + message;
+      this.returnPeripheral = message;
     });
 
     try {
