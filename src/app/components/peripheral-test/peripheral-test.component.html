@@ -11,7 +11,7 @@
       <mat-form-field [style.width.px]="250">
         <mat-label>Periférico</mat-label>
         <mat-select [(ngModel)]="peripheral" name="peripheral" (selectionChange)="getCommands()">
-            <mat-option *ngFor="let p of peripherals" [value]="p.name">{{ p.name }}</mat-option>
+          <mat-option *ngFor="let p of peripherals" [value]="p.name">{{ p.name }}</mat-option>
         </mat-select>
       </mat-form-field>
 
@@ -20,7 +20,7 @@
       <mat-form-field [style.width.px]="350">
         <mat-label>Comando</mat-label>
         <mat-select [(ngModel)]="command" name="command">
-            <mat-option *ngFor="let c of commands" [value]="c.name">{{ c.name }}</mat-option>
+          <mat-option *ngFor="let c of commands" [value]="c.name">{{ c.name }}</mat-option>
         </mat-select>
       </mat-form-field>
 
@@ -39,10 +39,15 @@
       <button mat-flat-button color="primary">Enviar</button>
     </mat-card-actions>
 
+    <mat-form-field [style.width.px]="625">
+      <mat-label>Nome do periférico</mat-label>
+      <input matInput #input [(ngModel)]="returnPeripheral" name="returnPeripheral" readonly><br />
+    </mat-form-field>
+
     <mat-card-footer>
-      <mat-form-field  [style.width.px]="625">
+      <mat-form-field [style.width.px]="625">
         <mat-label>Retorno do periférico</mat-label>
-        <textarea matInput readonly [(ngModel)]="returnPeripheral" name="returnPeripheral"></textarea>
+        <textarea matInput readonly [(ngModel)]="returnPeripheralValue" name="returnPeripheralValue" rows="10"></textarea>
       </mat-form-field>
       <div *ngFor="let message of messages">
         {{ message }}

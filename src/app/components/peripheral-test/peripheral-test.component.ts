@@ -26,6 +26,7 @@ export class PeripheralTestComponent {
   public command: string = "";
   public jsonInput: string = "";
   public returnPeripheral: string = "";
+  public returnPeripheralValue: string = "";
   public peripherals: any[] = [];
   public commands: any[] = [];
 
@@ -36,8 +37,9 @@ export class PeripheralTestComponent {
   }
 
   async ngOnInit() {
-    this.connection.on('ReceberRetorno', (guid, message) => {
-      this.returnPeripheral = message;
+    this.connection.on('ReceberRetorno', (guid, peripheral, message) => {
+      this.returnPeripheral = peripheral;
+      this.returnPeripheralValue = message;
     });
 
     try {
