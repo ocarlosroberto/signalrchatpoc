@@ -8,6 +8,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 
+import { LocalService } from '../../services/local.service';
+
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 
 @Component({
@@ -30,6 +32,9 @@ export class PeripheralTestComponent {
   public peripherals: any[] = [];
   public commands: any[] = [];
 
+  private localService! : LocalService;
+  public userName: string = "";
+
   constructor() {
     this.connection = new HubConnectionBuilder()
       .withUrl(this.hubUrl + '/hub?username=Tela' + Math.floor(Math.random() * 100), {withCredentials: false})
@@ -43,6 +48,10 @@ export class PeripheralTestComponent {
     });
 
     try {
+      const user = this.localService.getUserName().subscribe(data => {
+        this.userName = data;
+      });
+
       this.getPeripherals();
 
       await this.connection.start();
