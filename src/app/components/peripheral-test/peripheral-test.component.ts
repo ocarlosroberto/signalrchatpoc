@@ -32,12 +32,11 @@ export class PeripheralTestComponent {
   public peripherals: any[] = [];
   public commands: any[] = [];
 
-  private localService! : LocalService;
   public userName: string = "";
 
-  constructor() {
+  constructor(private localService: LocalService) {
     this.connection = new HubConnectionBuilder()
-      .withUrl(this.hubUrl + '/hub?username=Tela' + Math.floor(Math.random() * 100), {withCredentials: false})
+      .withUrl(this.hubUrl + '/hub?username=Tela' + Math.floor(Math.random() * 100), { withCredentials: false })
       .build();
   }
 
@@ -63,7 +62,7 @@ export class PeripheralTestComponent {
 
   async sendMessage() {
     if (!this.command) return;
-    await this.connection.invoke('EnviarComandoParaPeriferico', this.generateGuid() ,this.peripheral, this.command, this.jsonInput);
+    await this.connection.invoke('EnviarComandoParaPeriferico', this.generateGuid(), this.peripheral, this.command, this.jsonInput);
   }
 
   getPeripherals(): void {
@@ -81,8 +80,8 @@ export class PeripheralTestComponent {
       this.commands = JSON.parse(storageValue);
   }
 
-  private generateGuid() : string {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+  private generateGuid(): string {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
       var r = Math.random() * 16 | 0,
         v = c == 'x' ? r : (r & 0x3 | 0x8);
       return v.toString(16);
